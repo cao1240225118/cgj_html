@@ -1,0 +1,84 @@
+{include file='pub/_meta' /}
+<link rel="stylesheet" href="/cgj_html/public/ueditor/third-party/SyntaxHighlighter/shCoreDefault.css">
+<script type="text/javascript" src="/cgj_html/public/ueditor/third-party/SyntaxHighlighter/shCore.js"></script>
+<script type="text/javascript">
+    SyntaxHighlighter.all();//文章展示页代码高亮
+</script>
+</head>
+<body>
+
+{include file='pub/_header' /}
+
+<div id="mainbody">
+    <!-- blogs of start -->
+    <div class="blogs">
+        <div id="index_view">
+            <h2 class="t_nav">
+                <a href="">个人博客</a>
+            </h2>
+            <h1 class="blog-title">{{$data.title}}</h1>
+            <p class="blog-time">发布时间：{{$data.create_time}} <span>编辑：{{$data.create_user}}</span>阅读（30）</p>
+            <ul>
+               {{$data.content}}
+            </ul>
+            <div class="share">
+                <!-- baidu Button begin -->
+                <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare">
+                    <span class="bds_more">分享到：</span>
+                    <a href="" class="bds_qzone"></a>
+                    <a href="" class="bds_tsina"></a>
+                    <a href="" class="bds_tqq"></a>
+                    <a href="" class="bds_renren"></a>
+                    <a href="" class="bds_t163"></a>
+                    <a href="" class="shareCount"></a>
+                </div>
+                <script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6574585" ></script>
+                <script type="text/javascript" id="bdshell_js"></script>
+                <script type="text/javascript">
+                    document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date()/3600000)
+                </script>
+                <!-- Baidu Button END -->
+            </div>
+        </div>
+        <!-- bloglist of end -->
+        <!--右边菜单栏-->
+        {include file='pub/_menu' /}
+        <!--右边菜单栏-->
+    </div>
+    <!-- blogs of end -->
+</div>
+<!-- mianbody of end -->
+{include file='pub/_footer' /}
+
+<!--自定义代码从这里开始写-->
+<script type="text/javascript">
+
+    //项目经历
+    function index_pro(){
+        layer.msg("该功能尚未开放，请敬请期待",{icon:2,time:1200});
+    }
+    /*校园生活 of index_life*/
+    function index_life(){
+        layer.msg("该功能尚未开放，请敬请期待",{icon:2,time:1200});
+    }
+    /*闲言碎语 of index_talk*/
+    function index_talk(){
+        layer.msg("该功能尚未开放，请敬请期待",{icon:2,time:1200});
+    }
+    /*派兵布阵 of index_html*/
+    function index_html(){
+        layer.msg("该功能尚未开放，请敬请期待",{icon:2,time:1200});
+    }
+    /*个人简历 of index_me*/
+    function index_me(){
+        layer.msg("该功能尚未开放，请敬请期待",{icon:2,time:1200});
+    }
+    /*跳转文章的详情*/
+
+
+
+
+</script>
+<!--自定义代码从这里开始写-->
+</body>
+</html>

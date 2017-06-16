@@ -1,0 +1,179 @@
+{include file='public/_meta' /}
+<title>靈吾靈</title>
+<meta name="keywords" content="H-ui.admin v3.0,H-ui网站后台模版,后台模版下载,后台管理系统模版,HTML后台模版下载">
+<meta name="description" content="H-ui.admin v3.0，是一款由国人开发的轻量级扁平化网站后台模板，完全免费开源的网站后台管理系统模版，适合中小型CMS后台系统。">
+</head>
+<body>
+{include file='public/_header' /}
+{include file='public/_menu' /}
+<section class="Hui-article-box">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 博客管理 <span class="c-gray en">&gt;</span> 博客分类 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <div class="pd-20 text-c">
+        <div class="text-c">
+            <input type="text" name="" id="tagname" placeholder="添加一个新的分类" style="width:250px" class="input-text">
+            <button name="" id="addtag" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 添加</button>
+        </div>
+        <div class="cl pd-5 bg-1 bk-gray mt-20">
+            <span class="l">
+                <a href="javascript:;" onclick="del_all('{{:url('admin/blog_tag/delete_all')}}','tag_id','你确定要删除选中的分类吗？')" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe600;</i> 批量删除</a>
+                <!--<a class="btn btn-primary radius" onclick="system_category_add('添加资讯','system-category-add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加栏目-->
+                <!--</a>-->
+            </span>
+            <span class="r">共有数据：<strong>{{$count}}</strong> 条</span>
+        </div>
+        <div class="mt-20">
+            <table class="table table-border table-bordered table-hover table-bg table-sort">
+                <thead>
+                <tr class="text-c">
+                    <th width="25"><input type="checkbox" name="" value=""></th>
+                    <th width="80">ID</th>
+                    <th width="100">分类名称</th>
+                    <th width="120">创建时间</th>
+                    <th width="120">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="tag" id="info"}
+                <tr class="text-c">
+                    <td><input type="checkbox" name="tag_id" value="{{$info.id}}"></td>
+                    <td>{{$info.id}}</td>
+                    <td class="text-l" id='t{{$info.id}}'>{{$info.name}}</td>
+                    <td >{{$info.create_time}}</td>
+                    <td class="f-14">
+                        <a title="编辑" href="javascript:;" onclick="system_category_edit({{$info.id}})" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i>
+                        </a>
+                        <a title="删除" href="javascript:;" onclick="system_category_del({{$info.id}})" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i>
+                        </a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+{include file='public/_footer' /}
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__LIB__/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="__LIB__/datatables/1.10.0/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="__LIB__/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+    $('.table-sort').dataTable({
+        "aaSorting": [[ 1, "desc" ]],//默认第几个排序
+        "bStateSave": true,//状态保存
+        "aoColumnDefs": [
+            //{"bVisible": false, "aTargets": [ 3 ]} //控制列的隐藏显示
+            {"orderable":false,"aTargets":[0,2,3,4]}// 制定列不参与排序
+        ]
+    });
+    /*批量删除
+     * @param url 异步提交的接口地址，例如：{{:url('admin/index/check')}}
+     * @param checkbox_group checkbox组的名称，默认id[];
+     * @param msg 需要反馈的信息
+     */
+    function del_all(url,checkbox_group,msg){
+        checkbox_group = checkbox_group || 'id[]' ;
+        layer.confirm(msg,{
+            btn:['确定' ,'取消'],
+            title:'提示',
+            icon:3,
+        },function () {
+            id = [],
+                $("input[name='"+checkbox_group+"']:checked").each(function(){
+                    id.push($(this).val());
+                });
+            $.post(url,{id:id.join(',')}, function(data){
+                if(data.code==0){
+                    layer.msg('删除失败！',{icon:2,time:1000});
+                }else{
+                    layer.msg(data.msg,{icon:1,time:1500});
+                    window.location.reload();
+                }
+            },'json');
+        }, function(index){
+            layer.close(index);
+        })
+    }
+
+    /*系统-栏目-添加*/
+    function system_category_add(title,url,w,h){
+        layer_show(title,url,w,h);
+    }
+    /*系统-栏目-编辑*/
+    function system_category_edit(id){
+        var $val = $("#t"+id).text();
+        layer.open({
+            type:1,
+            area:['400px',"200px"],
+            shadeClose:true,
+            content:'<div class="text-c" style="padding:40px 0"><input type="text"  id="tag_val'+id+'" style="width:200px; margin-right: 10px" class="input-text" value="'+$val+'"><button id="insertBtn" onclick="insertClick('+id+')" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 确定修改</button></div>'
+        });
+    }
+    /*博客-类别-修改*/
+    function insertClick(id) {
+        var $name = $("#tag_val"+id).val();
+        $.post("insert",{id:id,val:$name},function (res) {
+            if(res.msg=='success'){
+                layer.closeAll();
+                layer.msg('修改成功',{icon:1,time:1000},function (index) {
+                    $("#t"+id).text($name);
+                });
+            }else{
+                layer.msg('修改失败',{icon:2,time:1000});
+            }
+        })
+    }
+
+
+
+    /*博客-分类-删除*/
+    function system_category_del(id){
+        layer.confirm('确认要删除吗？',function(index){
+            $.post("delete",{id:id},function (res) {
+                if(res.msg=='success'){
+                    layer.msg('删除成功',{icon:1,time:1000});
+                    location.href = res.url;
+                }else{
+                    layer.msg('修改失败',{icon:2,time:1000});
+                }
+            })
+            $(obj).parents("tr").remove();
+            layer.msg('已删除!',{icon:1,time:1000});
+        });
+    }
+    //添加新的类别
+    $("#addtag").click(function () {
+        $.ajax({
+            url:"{{:url('admin/BlogTag/add')}}",
+            type:"post",
+            dataType:"json",
+            data:{tag:$("#tagname").val()},
+            success:function(res){
+                if(res.msg=="success"){
+                    layer.msg("类别添加成功！",{icon: 1,time:1000},function () {
+                        location.href= res.url;
+                    });
+                }
+            },
+            error:function(){
+                layer.msg("添加失败",{icon: 2,time:1000});
+            }
+
+        })
+    })
+
+
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>
+
+
+
+
+
+
+
+
+

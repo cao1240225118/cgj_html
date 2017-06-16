@@ -1,0 +1,78 @@
+{include file='pub/_meta' /}
+</head>
+<body>
+
+{include file='pub/_header' /}
+
+<div id="mainbody">
+    <!-- blogs of start -->
+    <div class="blogs">
+        <ul class="bloglist">
+            {if condition='$res eq 0 '}
+            <h2 style="color:#fff; width:100%; margin:50px 100px">没有符合数据</h2>
+            {else /}
+            {volist name="res" id="data"}
+            <li>
+                <div class="arrow_box">
+                    <!-- 三角形 -->
+                    <div class="ti"></div>
+                    <!-- 圆形 -->
+                    <div class="ci"></div>
+                    <h2 class="title"><a href="javascript:;" onclick="blog_content({{$data.id}})" >{{$data.title}}</a></h2>
+                    <div class="textinfo">
+                        <a a href="javascript:;" onclick="blog_content({{$data.id}})"><img src="uploads/{{$data.src}}" alt=""></a>
+                        <p>{{$data.blog_desc}}</p>
+                    </div>
+                    <ul class="details">
+                        <li class="likes"><a href="#">10</a></li>
+                        <li class="comments"><a href="#">34</a></li>
+                        <li class="icon-time"><a href="#"><?php echo date('Y-m-d',$data['create_time'])?></a></li>
+                    </ul>
+                </div>
+            </li>
+            {/volist}
+            {/if}
+        </ul>
+        <!-- bloglist of end -->
+        <!--右边菜单栏-->
+        {include file='pub/_menu' /}
+        <!--右边菜单栏-->
+    </div>
+    <!-- blogs of end -->
+</div>
+<!-- mianbody of end -->
+{include file='pub/_footer' /}
+
+<!--自定义代码从这里开始写-->
+<script type="text/javascript">
+    //项目经历
+    function index_pro(){
+        layer.msg("该功能尚未开放，请敬请期待",{icon:2,time:1200});
+    }
+    /*校园生活 of index_life*/
+    function index_life(){
+        layer.msg("该功能尚未开放，请敬请期待",{icon:2,time:1200});
+    }
+    /*闲言碎语 of index_talk*/
+    function index_talk(){
+        layer.msg("该功能尚未开放，请敬请期待",{icon:2,time:1200});
+    }
+    /*派兵布阵 of index_html*/
+    function index_html(){
+        layer.msg("该功能尚未开放，请敬请期待",{icon:2,time:1200});
+    }
+    /*个人简历 of index_me*/
+    function index_me(){
+        layer.msg("该功能尚未开放，请敬请期待",{icon:2,time:1200});
+    }
+    /*跳转文章的详情*/
+    function blog_content(id){
+        location.href='/cgj_html/public/index.php/blog_info?id='+id;
+    }
+
+    //选择文章的描述
+
+</script>
+<!--自定义代码从这里开始写-->
+</body>
+</html>

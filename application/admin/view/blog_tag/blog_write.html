@@ -1,0 +1,122 @@
+{include file='public/_meta' /}
+<title>靈吾靈</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<link rel="stylesheet" href="__PUBLIC__/static/index/css/ssi-uploader.css">
+<style type="text/css">
+    .ssi-previewBox{width:auto;}
+</style>>
+<script type="text/javascript" charset="utf-8" src="__UE__/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="__UE__/ueditor.all.min.js"> </script>
+<!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+<!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+<script type="text/javascript" charset="utf-8" src="__UE__/lang/zh-cn/zh-cn.js"></script>
+</head>
+<body>
+{include file='public/_header' /}
+{include file='public/_menu' /}
+<section class="Hui-article-box" style="overflow-y:auto; ">
+    <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 博客管理 <span class="c-gray en">&gt;</span> 博客信息录入 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+    <form action="" method="post" id="write">
+        <div class="pd-20">
+            <span style="margin-left: 2%;">文章标题：</span>
+            <input type="text" name="title" id="_t" placeholder="填写博客的标题" style="width:350px; margin-right: 20px" class="input-text">
+            <span>文章分类：
+                <span class="select-box" style="width:150px;margin-left: 10px;">
+                    <select class="select" name="_tag" size="1" id="_tags">
+                        {volist name="tags" id="tag"}
+                        <option value="{{$tag.id}}">{{$tag.name}}</option>
+                        {/volist}
+                    </select>
+                </span>
+            </span>
+            <span style="margin-left: 30px;">是否保密
+                <span class="select-box" style="width:90px;margin-left: 10px;">
+                    <select class="select" name="_secrecy" size="1" id="_s">
+                        <option value="是">是</option>
+                        <option value="否" selected = "selected" >否</option>
+                    </select>
+                </span>
+            </span>
+        </div>
+        <div style="padding:20px 45px;">
+            <span style="display: inline-block; width:40%; float:left;">
+                <span style="float: left;">文章描述：</span>
+                <span><textarea name="" id="desc" cols="30" rows="3" class="textarea" style="width:70%"></textarea></span>
+            </span>
+            <input id="imgID" type="hidden" name="imgid">
+            <span style="width:40%; display: inline-block">
+                <span style="float:left;vertical-align: middle" class="pd-10">文章封面图：</span>
+                <span style=""><input id="fileUpload" type="file" name="file"></span>
+            </span>
+        </div>
+        <div style="clear:both;"></div>
+        <div class="ueditor pd-10 text-c">
+            <script id="editor" type="text/plain" style="width:95%;height:500px; margin:0 auto;" name="ueditor"></script>
+        </div>
+        <div class="pd-20 text-c">
+            <input type="submit" class="btn btn-success" value="确定提交" style="">
+        </div>
+
+    </form>
+</section>
+
+
+{include file='public/_footer' /}
+<!--上次图片的插件-->
+<script type="text/javascript" src="__PUBLIC__/static/index/js/ssi-uploader.js"></script>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript">
+//    实例化编辑器
+//    建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+    var ue = UE.getEditor("editor");
+    //提交数据；
+    $("input[type='submit']").click(function (e) {
+        e.preventDefault();
+        var $val = $('#imgID').val();
+        if($val!=0) {
+            $.ajax({
+                url:'{{admin/blog_tag/write_add}}',
+                type: "post",
+                dataType: "json",
+                data: {
+                    title: $("#_t").val(),
+                    _tag: $("#_tags").val(),
+                    _secrecy: $("#_s").val(),
+                    imgid: $("#imgID").val(),
+                    desc: $("#desc").val(),
+                    ueditor: ue.getContent()
+                },
+                success: function (res) {
+                    if (res.msg == "success") {
+                        layer.msg("文章提交成功！", {icon: 1, time: 1000});
+                        location.href = res.url;
+                    } else {
+                        layer.msg("文章提交失败！", {icon: 2, time: 1000});
+                    }
+                }
+            })
+        }else{
+            layer.alert("请先上传封面图！");
+        }
+
+    });
+
+    //先上传图片；
+    $("#fileUpload").ssi_uploader({
+        url:"{{url('admin/blog_tag/img_add')}}",
+        dropZone:false,
+        locale:'zh',
+        allowed:['jpg','gif','txt','png','pdf'],
+        ajaxOptions:{//ajax的扩展项
+            success:function(res){
+                $('#imgID').val(res.data);
+            }
+        }
+    });
+
+</script>
+<!--请在上方写此页面业务相关的脚本-->
+
+</body>
+</html>

@@ -1,0 +1,85 @@
+<aside>
+    <div class="search">
+        <form action="{{:url('index/index/search')}}" class="searchform" method="post">
+            <input type="text" id="searchs" placeholder="Search" name="search" >
+        </form>
+    </div>
+    <div class="tag_nav">
+        <ul>
+            {volist name="tag" id="tags"}
+            <li><a href="tag?name={{$tags.id}}" title>{{$tags.name}}</a></li>
+            {/volist}
+            <!--<li><a href="" title>HTML5/CSS3</a></li>-->
+            <!--<li><a href="" title>Javascript</a></li>-->
+            <!--<li><a href="" title>PHP建站</a></li>-->
+            <!--<li><a href="" title>前端各类框架</a></li>-->
+        </ul>
+    </div>
+    <div class="time_nav">
+        <ul>
+            {foreach $time as $key=>$value}
+            <li><a href="tag?time=<?php $d=str_replace('年','',$key);$t=str_replace('月','',$d);echo $t; ?>">{{$key}}({{$value}})</a></li>
+            {/foreach}
+        </ul>
+    </div>
+    <div class="tuijian">
+        <h2>推荐文章</h2>
+        <ol>
+            {volist name="article" id="data" length="9" key="k"}
+            <li><span><strong>{{$k}}</strong></span><a href="blog_info?id={{$data.id}}">{{$data.title}}</a></li>
+            {/volist}
+
+        </ol>
+    </div>
+    <!--<div class="toppic">-->
+        <!--<h2>图文并茂</h2>-->
+        <!--<ul>-->
+            <!--<li>-->
+                <!--<a href="">-->
+                    <!--<img src="images/k01.jpg" alt="">-->
+                    <!--腐女不可怕，就怕妇女会画画-->
+                    <!--<p>伤不起</p>-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<a href="">-->
+                    <!--<img src="images/k02.jpg" alt="">-->
+                    <!--腐女不可怕，就怕妇女会画画-->
+                    <!--<p>伤不起</p>-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<a href="">-->
+                    <!--<img src="images/k03.jpg" alt="">-->
+                    <!--腐女不可怕，就怕妇女会画画-->
+                    <!--<p>伤不起</p>-->
+                <!--</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+    <!--</div>-->
+    <!--<div class="clicks">-->
+        <!--<h2>热门点击</h2>-->
+        <!--<ol>-->
+            <!--<li><span><a href="">慢生活</a></span><a href="">有一种思念，是淡淡的幸福，一个心情一个行文字</a></li>-->
+            <!--<li><span><a href="">爱情美女</a></span><a href="">有一种思念，是淡淡的幸福，一个心情一个行文字</a></li>-->
+            <!--<li><span><a href="">私人播客</a></span><a href="">有一种思念，是淡淡的幸福，一个心情一个行文字</a></li>-->
+            <!--<li><span><a href="">碎言碎语</a></span><a href="">有一种思念，是淡淡的幸福，一个心情一个行文字</a></li>-->
+            <!--<li><span><a href="">慢慢慢</a></span><a href="">有一种思念，是淡淡的幸福，一个心情一个行文字</a></li>-->
+            <!--<li><span><a href="">古典音乐</a></span><a href="">有一种思念，是淡淡的幸福，一个心情一个行文字</a></li>-->
+            <!--<li><span><a href="">js事例</a></span><a href="">有一种思念，是淡淡的幸福，一个心情一个行文字</a></li>-->
+            <!--<li><span><a href="">小说初稿</a></span><a href="">有一种思念，是淡淡的幸福，一个心情一个行文字</a></li>-->
+        <!--</ol>-->
+    <!--</div>-->
+    <div class="viny">
+        <dl>
+            <dt class="art"><img src="images/artwork.png" alt="专辑"></dt>
+            <dd class="icon-artist"><span></span>歌手：赵雷</dd>
+            <dd class="icon-album"><span></span>所属专辑：《赵小雷》</dd>
+            <dd class="icon-like"><span></span>夏欢</dd>
+            <dd class="music">
+                <audio src="images/nf.mp3" autoplay controls></audio>
+                <!-- 也可以加loop属性，自动播放 -->
+            </dd>
+        </dl>
+    </div>
+</aside>
